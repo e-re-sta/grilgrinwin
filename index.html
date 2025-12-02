@@ -102,6 +102,26 @@
     transform: scale(1.05);
   }
 
+  .site2-button {
+    display: block;
+    width: 200px;
+    margin: 30px auto;
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+
+  .site2-button:hover {
+    transform: scale(1.05);
+    background: var(--secondary-color);
+  }
+
 </style>
 </head>
 <body>
@@ -117,6 +137,8 @@
   <div class="game-list" id="gameList">
     <!-- Game cards inserted here -->
   </div>
+
+  <a href="site2.html" class="site2-button">Go to Site 2</a>
 </main>
 
 <script>
