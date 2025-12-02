@@ -3,180 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GrillGrinWin Landing Page</title>
+<title>Game Hub</title>
 <style>
+  :root {
+    --bg-color-light: #f5f5f5;
+    --text-color-light: #222;
+    --bg-color-dark: #121212;
+    --text-color-dark: #eee;
+  }
+
   body {
     font-family: Arial, sans-serif;
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
     margin: 0;
     padding: 0;
-    background: #f5f5f5;
-    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .dark-mode {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+  }
+
+  header {
+    padding: 20px;
     text-align: center;
-    transition: background 0.3s, color 0.3s;
-  }
-  body.dark {
-    background: #1e1e1e;
-    color: #f5f5f5;
-  }
-  header, footer {
-    background: #333;
+    background-color: #444;
     color: white;
-    padding: 1rem;
-    transition: background 0.3s, color 0.3s;
   }
-  body.dark header, body.dark footer {
-    background: #222;
-    color: #f5f5f5;
-  }
+
   main {
-    padding: 2rem;
+    padding: 20px;
   }
-  h1, h2 {
-    margin: 1rem 0;
+
+  .game-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
   }
-  .cta-button {
-    background: #ff6600;
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1rem;
+
+  .game-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 200px;
+    padding: 15px;
+    text-align: center;
+    background-color: #fff;
     cursor: pointer;
-    margin: 0.5rem;
-    transition: background 0.3s;
+    transition: transform 0.2s;
   }
-  .cta-button:hover {
-    background: #ff8533;
+
+  .game-card:hover {
+    transform: scale(1.05);
   }
-  .game-level {
-    margin: 2rem 0;
+
+  .dark-mode .game-card {
+    background-color: #222;
+    border-color: #555;
   }
-  .paywall {
-    display: none;
-    background: #ffdddd;
-    border: 1px solid #ff4444;
-    padding: 1rem;
-    margin: 1rem auto;
-    width: 80%;
-    transition: background 0.3s, color 0.3s;
-  }
-  body.dark .paywall {
-    background: #552222;
-    border-color: #ff4444;
-    color: #f5f5f5;
-  }
-  .toggle-mode {
-    margin-top: 1rem;
-    background: #444;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
+
+  button {
+    padding: 10px 15px;
+    margin-top: 10px;
     cursor: pointer;
   }
+
 </style>
 </head>
 <body>
 
 <header>
-  <h1>GrillGrinWin</h1>
-  <p>Your anonymous browser gaming experience</p>
-  <button class="toggle-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <h1>Game Hub</h1>
+  <button id="toggleDark">Toggle Dark Mode</button>
 </header>
 
 <main>
-  <section>
-    <h2>Start Game</h2>
-    <div class="game-level">
-      <p>Current Level: <span id="level">1</span></p>
-      <button class="cta-button" onclick="nextLevel()">Level Up</button>
-    </div>
-  </section>
-
-  <div id="ethPaywall" class="paywall">
-    <p>Level 8 reached! Please pay 0.000001 ETH to continue playing.</p>
-    <button class="cta-button" onclick="payETH()">Pay Now (ETH)</button>
+  <h2>Available Games</h2>
+  <div class="game-list" id="gameList">
+    <!-- Game cards will be inserted here -->
   </div>
-
-  <div id="solPaywall" class="paywall">
-    <p>Buy lives with Solana to continue playing.</p>
-    <button class="cta-button" onclick="buyLifeSOL()">Buy Life (SOL)</button>
-  </div>
-
-  <section>
-    <h2>About GrillGrinWin</h2>
-    <p>Experience, fully anonymous and secure.</p>
-  </section>
-
-  <section>
-    <h2>Have fun!</h2>
-    <ul style="list-style: none; padding: 0;">
-      
-    </ul>
-  </section>
 </main>
 
-<footer>
-  <p>© 2025 BratwurstBaron. All rights reserved.</p>
-</footer>
-
 <script>
-let currentLevel = 1;
-let lives = 3;
+const games = [
+  { name: 'Game 1', file: 'game1.html', levelRestriction: 8 },
+  { name: 'Game 2', file: 'game2.html', levelRestriction: 0 },
+  { name: 'Game 3', file: 'game3.html', levelRestriction: 0 }
+];
 
-function nextLevel() {
-  currentLevel++;
-  document.getElementById('level').textContent = currentLevel;
-  checkETHPaywall();
-  checkSOLPaywall();
-}
+const userLevel = 7; // Example, can be updated dynamically
 
-function checkETHPaywall() {
-  if(currentLevel >= 8) {
-    document.getElementById('ethPaywall').style.display = 'block';
-  }
-}
+const gameList = document.getElementById('gameList');
 
-function checkSOLPaywall() {
-  if(lives <= 0) {
-    document.getElementById('solPaywall').style.display = 'block';
-  }
-}
+games.forEach(game => {
+  const card = document.createElement('div');
+  card.className = 'game-card';
+  card.innerHTML = `<h3>${game.name}</h3>`;
+  
+  card.onclick = () => {
+    if(game.levelRestriction > 0 && userLevel < game.levelRestriction) {
+      alert(`You need to pay 0.000001 ETH to access this game.`);
+      // ETH Payment API placeholder
+      console.log('ethPaymentAPI placeholder called for', game.name);
+    } else {
+      window.location.href = game.file;
+    }
+  };
+  
+  gameList.appendChild(card);
+});
 
-// API placeholder functions
-function payETH() {
-  alert('ETH payment simulated, game unlocked!');
-  document.getElementById('ethPaywall').style.display = 'none';
-}
+document.getElementById('toggleDark').onclick = () => {
+  document.body.classList.toggle('dark-mode');
+};
 
+// Example SOL Life purchase placeholder
 function buyLifeSOL() {
-  alert('SOL life purchase simulated, life added!');
-  lives += 1;
-  document.getElementById('solPaywall').style.display = 'none';
+  console.log('solPaymentAPI placeholder called');
+  alert('Solana life purchase triggered');
 }
-
-// Dark Mode toggle
-function toggleDarkMode() {
-  document.body.classList.toggle('dark');
-}
-  <!-- Back Button -->
-<button onclick="goBack()">Back</button>
-
-<script>
-  // Variable, um die letzte sichtbare Seite zu speichern
-  let lastPageId = 'page1'; // Standardstartseite
-
-  // Funktion zum Wechseln der Seiten (muss beim Seitenwechsel aufgerufen werden)
-  function showPage(newPageId) {
-    // Alle Container verstecken
-    document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
-    
-    // Neue Seite anzeigen
-    document.getElementById(newPageId).classList.remove('hidden');
-
-    // Letzte Seite speichern
-    lastPageId = newPageId;
-  }
-
-
 </script>
 
 </body>
