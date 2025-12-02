@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paywall Game Landing</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    text-align: center;
+  }
+  header {
+    background: #333;
+    color: white;
+    padding: 1rem;
+  }
+  main {
+    padding: 2rem;
+  }
+  .game-level {
+    margin: 1rem 0;
+  }
+  .paywall {
+    display: none;
+    background: #ffdddd;
+    border: 1px solid #ff4444;
+    padding: 1rem;
+    margin: 1rem auto;
+    width: 80%;
+  }
+  button {
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Willkommen zum Spiel</h1>
+</header>
+
+<main>
+  <div class="game-level">
+    <p>Aktuelles Level: <span id="level">1</span></p>
+    <button onclick="nextLevel()">Level aufsteigen</button>
+  </div>
+
+  <div id="ethPaywall" class="paywall">
+    <p>Level 8 erreicht! Bitte 0.000001 ETH bezahlen, um weiterzuspielen.</p>
+    <button onclick="payETH()">Jetzt zahlen</button>
+  </div>
+
+  <div id="solPaywall" class="paywall">
+    <p>Kaufe Leben mit Solana, um weiterzuspielen.</p>
+    <button onclick="buyLifeSOL()">Leben kaufen</button>
+  </div>
+</main>
+
+<script>
+let currentLevel = 1;
+let lives = 3;
+
+function nextLevel() {
+  currentLevel++;
+  document.getElementById('level').textContent = currentLevel;
+  checkETHPaywall();
+  checkSOLPaywall();
+}
+
+function checkETHPaywall() {
+  if(currentLevel >= 8) {
+    document.getElementById('ethPaywall').style.display = 'block';
+  }
+}
+
+function checkSOLPaywall() {
+  if(currentLevel > 5 && lives <= 0) { // Beispielregel
+    document.getElementById('solPaywall').style.display = 'block';
+  }
+}
+
+// API-Platzhalter Funktionen
+function payETH() {
+  // Hier später echte ETH Payment API einbinden
+  alert('ETH Zahlung simuliert, Spiel freigeschaltet!');
+  document.getElementById('ethPaywall').style.display = 'none';
+}
+
+function buyLifeSOL() {
+  // Hier später echte SOL Payment API einbinden
+  alert('SOL Leben-Kauf simuliert, Leben hinzugefügt!');
+  lives += 1;
+  document.getElementById('solPaywall').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
