@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grilgrinwin Landing</title>
+<style>
+  /* General Reset */
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+  body { background-color: #121212; color: #e0e0e0; min-height: 100vh; }
+  a { text-decoration: none; color: inherit; }
+  
+  /* Header */
+  header { padding: 20px; text-align: center; background-color: #1e1e1e; border-bottom: 2px solid #333; }
+  header h1 { font-size: 2.5em; margin-bottom: 10px; color: #f39c12; }
+  header p { font-size: 1.2em; color: #bbb; }
+
+  /* Dark Mode Toggle */
+  .dark-toggle { position: fixed; top: 20px; right: 20px; background: #f39c12; color: #121212; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
+
+  /* Game Overview */
+  .game-container { display: flex; flex-wrap: wrap; justify-content: center; padding: 40px 20px; gap: 20px; }
+  .game-card { background-color: #1e1e1e; padding: 20px; width: 220px; border-radius: 10px; border: 1px solid #333; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
+  .game-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+  .game-card h2 { margin-bottom: 15px; color: #f39c12; }
+  .game-card button { background-color: #f39c12; color: #121212; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
+
+  /* Paywall Buttons */
+  .paywall { margin-top: 10px; padding: 5px; font-size: 0.9em; background-color: #444; border-radius: 5px; cursor: not-allowed; color: #ccc; }
+
+  /* Site2 Button */
+  .site2-button { display: block; margin: 50px auto; padding: 15px 30px; background-color: #f39c12; color: #121212; border-radius: 8px; font-size: 1.2em; cursor: pointer; text-align: center; width: max-content; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Grilgrinwin</h1>
+  <p>Welcome to your games hub – play, pay, and enjoy!</p>
+</header>
+
+<button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+
+<section class="game-container">
+  <div class="game-card">
+    <h2>Game 1</h2>
+    <p>Level 1-8 available</p>
+    <button onclick="playGame('game1')">Play Game</button>
+    <div class="paywall" id="eth-paywall-game1">ETH Paywall Locked</div>
+  </div>
+  <div class="game-card">
+    <h2>Game 2</h2>
+    <p>Level 1-8 available</p>
+    <button onclick="playGame('game2')">Play Game</button>
+    <div class="paywall" id="sol-paywall-game2">SOL Paywall Locked</div>
+  </div>
+  <div class="game-card">
+    <h2>Game 3</h2>
+    <p>Level 1-8 available</p>
+    <button onclick="playGame('game3')">Play Game</button>
+    <div class="paywall" id="eth-paywall-game3">ETH Paywall Locked</div>
+  </div>
+</section>
+
+<div class="site2-button" onclick="goToSite2()">Go to Site 2</div>
+
+<script>
+  // Dark Mode Toggle
+  function toggleDarkMode() {
+    const body = document.body;
+    if(body.style.backgroundColor === 'white'){
+      body.style.backgroundColor = '#121212';
+      body.style.color = '#e0e0e0';
+    } else {
+      body.style.backgroundColor = 'white';
+      body.style.color = '#121212';
+    }
+  }
+
+  // Placeholder API Functions
+  function ethPaymentAPI(gameId){
+    console.log('ETH Payment API called for', gameId);
+    document.getElementById(`eth-paywall-${gameId}`).style.display = 'none';
+    alert('ETH Payment Successful. Level unlocked!');
+  }
+
+  function solPaymentAPI(gameId){
+    console.log('SOL Payment API called for', gameId);
+    document.getElementById(`sol-paywall-${gameId}`).style.display = 'none';
+    alert('SOL Payment Successful. Extra lives unlocked!');
+  }
+
+  // Game Play Simulation
+  function playGame(gameId){
+    // Here you can add Level checks, paywall checks etc.
+    if(gameId === 'game1' || gameId === 'game3'){
+      ethPaymentAPI(gameId);
+    } else if(gameId === 'game2'){
+      solPaymentAPI(gameId);
+    }
+    alert('Starting ' + gameId);
+  }
+
+  // Site 2 Redirect
+  function goToSite2(){
+    alert('Redirecting to Site 2...');
+    // window.location.href = 'site2.html'; // Uncomment when site2 exists
+  }
+</script>
+
+</body>
+</html>
