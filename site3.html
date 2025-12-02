@@ -138,7 +138,7 @@
     <!-- Game cards inserted here -->
   </div>
 
-  <a href="BRWST.html" class="site2-button">last page</a>
+  <a href="site2.html" class="site2-button">Go to Site 2</a>
 </main>
 
 <script>
@@ -178,26 +178,6 @@ function buyLifeSOL() {
   console.log('solPaymentAPI placeholder called');
   alert('Solana life purchase triggered');
 }
-
-  <!-- Back Button -->
-<button onclick="goBack()">Back</button>
-
-<script>
-  // Variable, um die letzte sichtbare Seite zu speichern
-  let lastPageId = 'page1'; // Standardstartseite
-
-  // Funktion zum Wechseln der Seiten (muss beim Seitenwechsel aufgerufen werden)
-  function showPage(newPageId) {
-    // Alle Container verstecken
-    document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
-    
-    // Neue Seite anzeigen
-    document.getElementById(newPageId).classList.remove('hidden');
-
-    // Letzte Seite speichern
-    lastPageId = newPageId;
-  }
-
 </script>
 
 </body>
