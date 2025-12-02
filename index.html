@@ -5,37 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GrillGrinWin Landing Page</title>
 <style>
+  :root {
+    --bg-light: #f5f5f5;
+    --bg-dark: #1e1e1e;
+    --text-light: #333;
+    --text-dark: #f5f5f5;
+    --header-footer-light: #333;
+    --header-footer-dark: #222;
+    --button-bg: #ff6600;
+    --button-hover: #ff8533;
+    --paywall-bg-light: #ffdddd;
+    --paywall-bg-dark: #552222;
+    --paywall-border: #ff4444;
+  }
+
   body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f5f5f5;
-    color: #333;
+    background: var(--bg-light);
+    color: var(--text-light);
     text-align: center;
     transition: background 0.3s, color 0.3s;
   }
+
   body.dark {
-    background: #1e1e1e;
-    color: #f5f5f5;
+    background: var(--bg-dark);
+    color: var(--text-dark);
   }
+
   header, footer {
-    background: #333;
+    background: var(--header-footer-light);
     color: white;
     padding: 1rem;
     transition: background 0.3s, color 0.3s;
   }
+
   body.dark header, body.dark footer {
-    background: #222;
-    color: #f5f5f5;
+    background: var(--header-footer-dark);
+    color: var(--text-dark);
   }
+
   main {
     padding: 2rem;
   }
+
   h1, h2 {
     margin: 1rem 0;
   }
+
   .cta-button {
-    background: #ff6600;
+    background: var(--button-bg);
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -44,26 +64,31 @@
     margin: 0.5rem;
     transition: background 0.3s;
   }
+
   .cta-button:hover {
-    background: #ff8533;
+    background: var(--button-hover);
   }
+
   .game-level {
     margin: 2rem 0;
   }
+
   .paywall {
     display: none;
-    background: #ffdddd;
-    border: 1px solid #ff4444;
+    background: var(--paywall-bg-light);
+    border: 1px solid var(--paywall-border);
     padding: 1rem;
     margin: 1rem auto;
     width: 80%;
     transition: background 0.3s, color 0.3s;
   }
+
   body.dark .paywall {
-    background: #552222;
-    border-color: #ff4444;
-    color: #f5f5f5;
+    background: var(--paywall-bg-dark);
+    border-color: var(--paywall-border);
+    color: var(--text-dark);
   }
+
   .toggle-mode {
     margin-top: 1rem;
     background: #444;
@@ -71,6 +96,33 @@
     border: none;
     padding: 0.5rem 1rem;
     cursor: pointer;
+  }
+
+  .game-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .game-item {
+    background: #eee;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem;
+    width: 150px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  body.dark .game-item {
+    background: #333;
+    color: #f5f5f5;
+  }
+
+  .game-item a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
   }
 </style>
 </head>
@@ -100,6 +152,16 @@
     <p>Buy lives with Solana to continue playing.</p>
     <button class="cta-button" onclick="buyLifeSOL()">Buy Life (SOL)</button>
   </div>
+
+  <section>
+    <h2>Game Overview</h2>
+    <div class="game-list">
+      <div class="game-item"><a href="game1.html">Game 1</a></div>
+      <div class="game-item"><a href="game2.html">Game 2</a></div>
+      <div class="game-item"><a href="game3.html">Game 3</a></div>
+      <!-- Add more games here -->
+    </div>
+  </section>
 
   <section>
     <h2>About GrillGrinWin</h2>
