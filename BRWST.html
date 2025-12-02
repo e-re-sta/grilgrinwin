@@ -176,14 +176,6 @@ function toggleDarkMode() {
     lastPageId = newPageId;
   }
 
-  // Funktion für den Back-Button
-  function goBack() {
-    // Nur zurück, wenn lastPageId existiert
-    if(lastPageId) {
-      document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
-      document.getElementById(lastPageId).classList.remove('hidden');
-    }
-  }
 
 </script>
 
