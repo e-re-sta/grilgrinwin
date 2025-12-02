@@ -1,27 +1,54 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paywall Game Landing</title>
+<title>GrillGrinWin Landing Page</title>
 <style>
   body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f4f4f4;
+    background: #f5f5f5;
+    color: #333;
     text-align: center;
+    transition: background 0.3s, color 0.3s;
   }
-  header {
+  body.dark {
+    background: #1e1e1e;
+    color: #f5f5f5;
+  }
+  header, footer {
     background: #333;
     color: white;
     padding: 1rem;
+    transition: background 0.3s, color 0.3s;
+  }
+  body.dark header, body.dark footer {
+    background: #222;
+    color: #f5f5f5;
   }
   main {
     padding: 2rem;
   }
-  .game-level {
+  h1, h2 {
     margin: 1rem 0;
+  }
+  .cta-button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: background 0.3s;
+  }
+  .cta-button:hover {
+    background: #ff8533;
+  }
+  .game-level {
+    margin: 2rem 0;
   }
   .paywall {
     display: none;
@@ -30,35 +57,69 @@
     padding: 1rem;
     margin: 1rem auto;
     width: 80%;
+    transition: background 0.3s, color 0.3s;
   }
-  button {
+  body.dark .paywall {
+    background: #552222;
+    border-color: #ff4444;
+    color: #f5f5f5;
+  }
+  .toggle-mode {
+    margin-top: 1rem;
+    background: #444;
+    color: white;
+    border: none;
     padding: 0.5rem 1rem;
-    margin-top: 0.5rem;
+    cursor: pointer;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Willkommen zum Spiel</h1>
+  <h1>GrillGrinWin</h1>
+  <p>Your anonymous browser gaming experience</p>
+  <button class="toggle-mode" onclick="toggleDarkMode()">Toggle Dark Mode</button>
 </header>
 
 <main>
-  <div class="game-level">
-    <p>Aktuelles Level: <span id="level">1</span></p>
-    <button onclick="nextLevel()">Level aufsteigen</button>
-  </div>
+  <section>
+    <h2>Start Game</h2>
+    <div class="game-level">
+      <p>Current Level: <span id="level">1</span></p>
+      <button class="cta-button" onclick="nextLevel()">Level Up</button>
+    </div>
+  </section>
 
   <div id="ethPaywall" class="paywall">
-    <p>Level 8 erreicht! Bitte 0.000001 ETH bezahlen, um weiterzuspielen.</p>
-    <button onclick="payETH()">Jetzt zahlen</button>
+    <p>Level 8 reached! Please pay 0.000001 ETH to continue playing.</p>
+    <button class="cta-button" onclick="payETH()">Pay Now (ETH)</button>
   </div>
 
   <div id="solPaywall" class="paywall">
-    <p>Kaufe Leben mit Solana, um weiterzuspielen.</p>
-    <button onclick="buyLifeSOL()">Leben kaufen</button>
+    <p>Buy lives with Solana to continue playing.</p>
+    <button class="cta-button" onclick="buyLifeSOL()">Buy Life (SOL)</button>
   </div>
+
+  <section>
+    <h2>About GrillGrinWin</h2>
+    <p>Experience exciting levels, paywalls, and integrated life purchases directly in your browser. Fully anonymous and secure.</p>
+  </section>
+
+  <section>
+    <h2>How it Works</h2>
+    <ul style="list-style: none; padding: 0;">
+      <li>HTML, CSS, JS – completely frontend-only</li>
+      <li>API placeholders for ETH & SOL payments</li>
+      <li>No middleware required, Edti-compliant</li>
+      <li>Backend fully hidden</li>
+    </ul>
+  </section>
 </main>
+
+<footer>
+  <p>© 2025 GrillGrinWin. All rights reserved.</p>
+</footer>
 
 <script>
 let currentLevel = 1;
@@ -78,23 +139,26 @@ function checkETHPaywall() {
 }
 
 function checkSOLPaywall() {
-  if(currentLevel > 5 && lives <= 0) { // Beispielregel
+  if(lives <= 0) {
     document.getElementById('solPaywall').style.display = 'block';
   }
 }
 
-// API-Platzhalter Funktionen
+// API placeholder functions
 function payETH() {
-  // Hier später echte ETH Payment API einbinden
-  alert('ETH Zahlung simuliert, Spiel freigeschaltet!');
+  alert('ETH payment simulated, game unlocked!');
   document.getElementById('ethPaywall').style.display = 'none';
 }
 
 function buyLifeSOL() {
-  // Hier später echte SOL Payment API einbinden
-  alert('SOL Leben-Kauf simuliert, Leben hinzugefügt!');
+  alert('SOL life purchase simulated, life added!');
   lives += 1;
   document.getElementById('solPaywall').style.display = 'none';
+}
+
+// Dark Mode toggle
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
 }
 </script>
 
