@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrilgrinWin Challenge</title>
+<style>
+  /* Global Styles */
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #f0f0f0;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #1f1f1f;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #ffcc00;
+  }
+
+  .dark-toggle {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    color: #121212;
+    font-weight: bold;
+  }
+
+  main {
+    padding: 2rem;
+  }
+
+  .levels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .level {
+    background-color: #1f1f1f;
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .level.completed {
+    background-color: #333;
+    border-color: #00ff88;
+  }
+
+  .level:hover {
+    transform: scale(1.05);
+  }
+
+  .game-area {
+    background-color: #1f1f1f;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  button {
+    padding: 0.6rem 1.2rem;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .eth-button {
+    background-color: #627eea;
+    color: #fff;
+  }
+
+  .sol-button {
+    background-color: #00ffa0;
+    color: #121212;
+  }
+
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right:0;
+    bottom:0;
+    background-color: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+
+  .popup-content {
+    background-color: #1f1f1f;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 2px solid #ffcc00;
+  }
+
+  .popup button {
+    margin-top: 1rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #1f1f1f;
+  }
+
+  footer button {
+    background-color: #ffcc00;
+    color: #121212;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>GrilgrinWin Challenge</h1>
+  <button class="dark-toggle">Toggle Dark Mode</button>
+</header>
+
+<main>
+  <section class="levels">
+    <!-- Levels dynamically generated -->
+  </section>
+
+  <section class="game-area">
+    <h2>Current Level: <span id="current-level">1</span></h2>
+    <p>Points: <span id="points">0</span></p>
+    <p>Lives: <span id="lives">3</span></p>
+    <button class="eth-button" onclick="ethPaymentAPI()">Pay 0.000001 ETH</button>
+    <button class="sol-button" onclick="solPaymentAPI()">Buy Life (SOL)</button>
+  </section>
+</main>
+
+<div class="popup" id="paywall-popup">
+  <div class="popup-content">
+    <h3>Payment Required</h3>
+    <p>You must pay to continue playing.</p>
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
+
+<footer>
+  <button onclick="goToSite2()">Go to Site 2</button>
+</footer>
+
+<script>
+  // Dark Mode Toggle
+  const toggle = document.querySelector('.dark-toggle');
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    if(document.body.classList.contains('light-mode')){
+      document.body.style.backgroundColor = '#f0f0f0';
+      document.body.style.color = '#121212';
+    } else {
+      document.body.style.backgroundColor = '#121212';
+      document.body.style.color = '#f0f0f0';
+    }
+  });
+
+  // Game Variables
+  let currentLevel = 1;
+  let points = 0;
+  let lives = 3;
+  const maxLevel = 10;
+
+  // Generate Levels
+  const levelsContainer = document.querySelector('.levels');
+  function generateLevels(){
+    levelsContainer.innerHTML = '';
+    for(let i=1;i<=maxLevel;i++){
+      const levelDiv = document.createElement('div');
+      levelDiv.className = 'level' + (i<currentLevel ? ' completed' : '');
+      levelDiv.innerText = 'Level ' + i;
+      levelDiv.addEventListener('click', () => selectLevel(i));
+      levelsContainer.appendChild(levelDiv);
+    }
+  }
+
+  function selectLevel(level){
+    if(level >= 8 && currentLevel < 8){
+      showPaywall();
+      return;
+    }
+    currentLevel = level;
+    updateGameDisplay();
+    generateLevels();
+  }
+
+  function updateGameDisplay(){
+    document.getElementById('current-level').innerText = currentLevel;
+    document.getElementById('points').innerText = points;
+    document.getElementById('lives').innerText = lives;
+  }
+
+  // Paywall Popup
+  const popup = document.getElementById('paywall-popup');
+  function showPaywall(){
+    popup.style.display = 'flex';
+  }
+  function closePopup(){
+    popup.style.display = 'none';
+  }
+
+  // Placeholder ETH Payment API
+  function ethPaymentAPI(){
+    alert('ETH Payment Placeholder triggered.');
+    // After payment, unlock game
+    currentLevel = 8;
+    updateGameDisplay();
+    generateLevels();
+    closePopup();
+  }
+
+  // Placeholder SOL Payment API
+  function solPaymentAPI(){
+    alert('SOL Payment Placeholder triggered. +1 Life');
+    lives += 1;
+    updateGameDisplay();
+  }
+
+  // Footer Button
+  function goToSite2(){
+    alert('Redirect to Site 2 placeholder.');
+  }
+
+  // Initialize
+  generateLevels();
+  updateGameDisplay();
+</script>
+
+</body>
+</html>
