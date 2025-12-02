@@ -3,34 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Hub</title>
+<title>GrillGrinWin Game Hub</title>
 <style>
   :root {
-    --bg-color-light: #f5f5f5;
-    --text-color-light: #222;
-    --bg-color-dark: #121212;
-    --text-color-dark: #eee;
+    --bg-light: #f5f5f5;
+    --text-light: #222;
+    --bg-dark: #181818;
+    --text-dark: #f0f0f0;
+    --primary-color: #ff6f61;
+    --secondary-color: #4ecdc4;
   }
 
   body {
-    font-family: Arial, sans-serif;
-    background-color: var(--bg-color-light);
-    color: var(--text-color-light);
+    font-family: 'Comic Sans MS', Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: var(--bg-light);
+    color: var(--text-light);
     transition: background-color 0.3s, color 0.3s;
   }
 
   .dark-mode {
-    background-color: var(--bg-color-dark);
-    color: var(--text-color-dark);
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
   }
 
   header {
-    padding: 20px;
-    text-align: center;
-    background-color: #444;
+    background: var(--primary-color);
     color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 2em;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+  }
+
+  header button {
+    background: var(--secondary-color);
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s;
+  }
+
+  header button:hover {
+    transform: scale(1.1);
   }
 
   main {
@@ -45,29 +66,40 @@
   }
 
   .game-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    width: 200px;
-    padding: 15px;
-    text-align: center;
     background-color: #fff;
+    border: 3px solid var(--primary-color);
+    border-radius: 20px;
+    width: 220px;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
   .game-card:hover {
     transform: scale(1.05);
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.3);
   }
 
   .dark-mode .game-card {
     background-color: #222;
-    border-color: #555;
+    border-color: var(--secondary-color);
   }
 
-  button {
-    padding: 10px 15px;
+  .game-card button {
+    background: var(--secondary-color);
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 12px;
     margin-top: 10px;
     cursor: pointer;
+  }
+
+  .game-card button:hover {
+    transform: scale(1.05);
   }
 
 </style>
@@ -75,14 +107,15 @@
 <body>
 
 <header>
-  <h1>Game Hub</h1>
+  GrillGrinWin Game Hub
+  <br>
   <button id="toggleDark">Toggle Dark Mode</button>
 </header>
 
 <main>
   <h2>Available Games</h2>
   <div class="game-list" id="gameList">
-    <!-- Game cards will be inserted here -->
+    <!-- Game cards inserted here -->
   </div>
 </main>
 
@@ -93,7 +126,7 @@ const games = [
   { name: 'Game 3', file: 'game3.html', levelRestriction: 0 }
 ];
 
-const userLevel = 7; // Example, can be updated dynamically
+let userLevel = 7; // Example, dynamic level can be implemented
 
 const gameList = document.getElementById('gameList');
 
@@ -104,9 +137,8 @@ games.forEach(game => {
   
   card.onclick = () => {
     if(game.levelRestriction > 0 && userLevel < game.levelRestriction) {
-      alert(`You need to pay 0.000001 ETH to access this game.`);
-      // ETH Payment API placeholder
-      console.log('ethPaymentAPI placeholder called for', game.name);
+      alert(`Pay 0.000001 ETH to unlock this game.`);
+      console.log('ethPaymentAPI placeholder for', game.name);
     } else {
       window.location.href = game.file;
     }
@@ -119,7 +151,7 @@ document.getElementById('toggleDark').onclick = () => {
   document.body.classList.toggle('dark-mode');
 };
 
-// Example SOL Life purchase placeholder
+// SOL Life purchase placeholder
 function buyLifeSOL() {
   console.log('solPaymentAPI placeholder called');
   alert('Solana life purchase triggered');
