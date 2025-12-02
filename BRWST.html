@@ -1,112 +1,165 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grilgrinwin Landing</title>
+<title>GrillGrinWin Landing Page</title>
 <style>
-  /* General Reset */
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
-  body { background-color: #121212; color: #e0e0e0; min-height: 100vh; }
-  a { text-decoration: none; color: inherit; }
-  
-  /* Header */
-  header { padding: 20px; text-align: center; background-color: #1e1e1e; border-bottom: 2px solid #333; }
-  header h1 { font-size: 2.5em; margin-bottom: 10px; color: #f39c12; }
-  header p { font-size: 1.2em; color: #bbb; }
-
-  /* Dark Mode Toggle */
-  .dark-toggle { position: fixed; top: 20px; right: 20px; background: #f39c12; color: #121212; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
-
-  /* Game Overview */
-  .game-container { display: flex; flex-wrap: wrap; justify-content: center; padding: 40px 20px; gap: 20px; }
-  .game-card { background-color: #1e1e1e; padding: 20px; width: 220px; border-radius: 10px; border: 1px solid #333; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
-  .game-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-  .game-card h2 { margin-bottom: 15px; color: #f39c12; }
-  .game-card button { background-color: #f39c12; color: #121212; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; }
-
-  /* Paywall Buttons */
-  .paywall { margin-top: 10px; padding: 5px; font-size: 0.9em; background-color: #444; border-radius: 5px; cursor: not-allowed; color: #ccc; }
-
-  /* Site2 Button */
-  .site2-button { display: block; margin: 50px auto; padding: 15px 30px; background-color: #f39c12; color: #121212; border-radius: 8px; font-size: 1.2em; cursor: pointer; text-align: center; width: max-content; }
-
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    color: #333;
+    text-align: center;
+    transition: background 0.3s, color 0.3s;
+  }
+  body.dark {
+    background: #1e1e1e;
+    color: #f5f5f5;
+  }
+  header, footer {
+    background: #333;
+    color: white;
+    padding: 1rem;
+    transition: background 0.3s, color 0.3s;
+  }
+  body.dark header, body.dark footer {
+    background: #222;
+    color: #f5f5f5;
+  }
+  main {
+    padding: 2rem;
+  }
+  h1, h2 {
+    margin: 1rem 0;
+  }
+  .cta-button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: background 0.3s;
+  }
+  .cta-button:hover {
+    background: #ff8533;
+  }
+  .game-level {
+    margin: 2rem 0;
+  }
+  .paywall {
+    display: none;
+    background: #ffdddd;
+    border: 1px solid #ff4444;
+    padding: 1rem;
+    margin: 1rem auto;
+    width: 80%;
+    transition: background 0.3s, color 0.3s;
+  }
+  body.dark .paywall {
+    background: #552222;
+    border-color: #ff4444;
+    color: #f5f5f5;
+  }
+  .toggle-mode {
+    margin-top: 1rem;
+    background: #444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Grilgrinwin</h1>
-  <p>Welcome to your games hub – play, pay, and enjoy!</p>
+  <h1>GrillGrinWin</h1>
+  <p>Dein anonymes Browser-Spielerlebnis</p>
+  <button class="toggle-mode" onclick="toggleDarkMode()">Dark Mode umschalten</button>
 </header>
 
-<button class="dark-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+<main>
+  <section>
+    <h2>Spiel starten</h2>
+    <div class="game-level">
+      <p>Aktuelles Level: <span id="level">1</span></p>
+      <button class="cta-button" onclick="nextLevel()">Level aufsteigen</button>
+    </div>
+  </section>
 
-<section class="game-container">
-  <div class="game-card">
-    <h2>Game 1</h2>
-    <p>Level 1-8 available</p>
-    <button onclick="playGame('game1')">Play Game</button>
-    <div class="paywall" id="eth-paywall-game1">ETH Paywall Locked</div>
+  <div id="ethPaywall" class="paywall">
+    <p>Level 8 erreicht! Bitte 0.000001 ETH bezahlen, um weiterzuspielen.</p>
+    <button class="cta-button" onclick="payETH()">Jetzt zahlen (ETH)</button>
   </div>
-  <div class="game-card">
-    <h2>Game 2</h2>
-    <p>Level 1-8 available</p>
-    <button onclick="playGame('game2')">Play Game</button>
-    <div class="paywall" id="sol-paywall-game2">SOL Paywall Locked</div>
-  </div>
-  <div class="game-card">
-    <h2>Game 3</h2>
-    <p>Level 1-8 available</p>
-    <button onclick="playGame('game3')">Play Game</button>
-    <div class="paywall" id="eth-paywall-game3">ETH Paywall Locked</div>
-  </div>
-</section>
 
-<div class="site2-button" onclick="goToSite2()">Go to Site 2</div>
+  <div id="solPaywall" class="paywall">
+    <p>Kaufe Leben mit Solana, um weiterzuspielen.</p>
+    <button class="cta-button" onclick="buyLifeSOL()">Leben kaufen (SOL)</button>
+  </div>
+
+  <section>
+    <h2>Über GrillGrinWin</h2>
+    <p>Erlebe spannende Levels, Paywalls und integrierte Lebens-Käufe direkt im Browser. Alles anonym und sicher.</p>
+  </section>
+
+  <section>
+    <h2>Wie es funktioniert</h2>
+    <ul style="list-style: none; padding: 0;">
+      <li>HTML, CSS, JS – komplett Frontend-only</li>
+      <li>API-Platzhalter für ETH & SOL Zahlungen</li>
+      <li>Keine Middleware nötig, Edti-konform</li>
+      <li>Backend vollständig unsichtbar</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 GrillGrinWin. Alle Rechte vorbehalten.</p>
+</footer>
 
 <script>
-  // Dark Mode Toggle
-  function toggleDarkMode() {
-    const body = document.body;
-    if(body.style.backgroundColor === 'white'){
-      body.style.backgroundColor = '#121212';
-      body.style.color = '#e0e0e0';
-    } else {
-      body.style.backgroundColor = 'white';
-      body.style.color = '#121212';
-    }
-  }
+let currentLevel = 1;
+let lives = 3;
 
-  // Placeholder API Functions
-  function ethPaymentAPI(gameId){
-    console.log('ETH Payment API called for', gameId);
-    document.getElementById(`eth-paywall-${gameId}`).style.display = 'none';
-    alert('ETH Payment Successful. Level unlocked!');
-  }
+function nextLevel() {
+  currentLevel++;
+  document.getElementById('level').textContent = currentLevel;
+  checkETHPaywall();
+  checkSOLPaywall();
+}
 
-  function solPaymentAPI(gameId){
-    console.log('SOL Payment API called for', gameId);
-    document.getElementById(`sol-paywall-${gameId}`).style.display = 'none';
-    alert('SOL Payment Successful. Extra lives unlocked!');
+function checkETHPaywall() {
+  if(currentLevel >= 8) {
+    document.getElementById('ethPaywall').style.display = 'block';
   }
+}
 
-  // Game Play Simulation
-  function playGame(gameId){
-    // Here you can add Level checks, paywall checks etc.
-    if(gameId === 'game1' || gameId === 'game3'){
-      ethPaymentAPI(gameId);
-    } else if(gameId === 'game2'){
-      solPaymentAPI(gameId);
-    }
-    alert('Starting ' + gameId);
+function checkSOLPaywall() {
+  if(lives <= 0) {
+    document.getElementById('solPaywall').style.display = 'block';
   }
+}
 
-  // Site 2 Redirect
-  function goToSite2(){
-    alert('Redirecting to Site 2...');
-    // window.location.href = 'site2.html'; // Uncomment when site2 exists
-  }
+// API-Platzhalter-Funktionen
+function payETH() {
+  alert('ETH Zahlung simuliert, Spiel freigeschaltet!');
+  document.getElementById('ethPaywall').style.display = 'none';
+}
+
+function buyLifeSOL() {
+  alert('SOL Leben-Kauf simuliert, Leben hinzugefügt!');
+  lives += 1;
+  document.getElementById('solPaywall').style.display = 'none';
+}
+
+// Dark Mode Umschaltung
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+}
 </script>
 
 </body>
